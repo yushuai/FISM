@@ -11,7 +11,7 @@ class Fism:
         self.K = 64
         self.batch = 1024
         self.max_len = 2313
-        self.lambda_reg = self.gamma_reg = 1e-2
+        self.lambda_reg = self.gamma_reg = 5e-3
         self.learning_rate = 8e-4
         self.P = tf.Variable(tf.random_uniform([self.item_num, self.K], minval=-0.1, maxval=0.1))
         self.Q = tf.Variable(tf.random_uniform([self.item_num, self.K], minval=-0.1, maxval=0.1))
@@ -109,18 +109,19 @@ class Fism:
         for i in range(self.user_num):
             x_test, y_test = self.helper.get_test_batch(i)
             rated_set = self.helper.item_rated_by_user[i]
+            neighbour_number = len(rated_set)
             rated_set = list(rated_set)
             if len(rated_set) < self.max_len:
                 while len(rated_set) < self.max_len:
                     rated_set.append(self.item_num)
             feed_neighbour = []
             for j in range(100):
-                feed_neighbour.append(rated_set[:self.max_len])
+                feed_neighbour.append(rated_set)
             score = sess.run(self.logits, feed_dict={
                 self.Y: y_test,
                 self.X: x_test,
                 self.neighbour: feed_neighbour,
-                self.neighbour_num: [self.max_len for i in x_test]
+                self.neighbour_num: [neighbour_number for i in x_test]
             })
             score = np.array(score)
             item_score = []
