@@ -8,3 +8,6 @@ Tensorflow 1.2
 
 This data set is extracted from movielens-1m by Dr. Xiangnan He. The data set is first proposed by the paper "Neural Collaborative Filtering".
 
+# last update date
+2017/12/22
+
