@@ -8,6 +8,7 @@ class DataUtil:
         # self.popular_product = self.count_popular_item()
         self.userNum = userNum
         self.itemNum = itemNum
+        self.num_negative = 4
         self.train, self.train_map = self.get_train_instance()
         self.index = 0
         self.sample_num = len(self.train)
@@ -15,8 +16,7 @@ class DataUtil:
         self.calc_item_rated_by_user()
         self.test = {}
         self.test_answer = []
-        self.read_test('ml_test')
-        self.num_negative = 4
+        self.read_test('dataset/ml_test')
     def calc_item_rated_by_user(self):
         for u, i in self.train_map:
             if u not in self.item_rated_by_user.keys():
@@ -72,8 +72,10 @@ class DataUtil:
             #     if (int(userid), int(p_product)) not in train and (int(userid), int(p_product), 1) not in result:
             #         result.add((int(userid), int(p_product), 0))
             #         break
-            item = random.randint(0, self.itemNum - 1)
-            if (int(userid), int(item), 1) not in triple:
+            for _ in range(self.num_negative):
+                item = random.randint(0, self.itemNum - 1)
+                while (int(userid), item) in train:
+                    item = random.randint(0, self.itemNum - 1)
                 triple.add((int(userid), int(item), 0))
         print('train set num is:' + str(len(triple)))
         return list(triple), train
