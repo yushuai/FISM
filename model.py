@@ -11,7 +11,7 @@ class Fism:
         self.K = 64
         self.batch = 1024
         self.max_len = 2313
-        self.lambda_reg = self.gamma_reg = 5e-3
+        self.lambda_reg = self.gamma_reg = 5e-6
         self.learning_rate = 8e-4
         self.P = tf.Variable(tf.random_uniform([self.item_num, self.K], minval=-0.1, maxval=0.1))
         self.Q = tf.Variable(tf.random_uniform([self.item_num, self.K], minval=-0.1, maxval=0.1))
@@ -105,7 +105,7 @@ class Fism:
         #                                           initial_accumulator_value=1e-8).minimize(self.loss)
 
     def evaluate(self, sess):
-        hit_num = 0
+        hit_num = 0.0
         for i in range(self.user_num):
             x_test, y_test = self.helper.get_test_batch(i)
             rated_set = self.helper.item_rated_by_user[i]
@@ -121,7 +121,7 @@ class Fism:
                 self.Y: y_test,
                 self.X: x_test,
                 self.neighbour: feed_neighbour,
-                self.neighbour_num: [neighbour_number for i in x_test]
+                self.neighbour_num: [neighbour_number for _ in x_test]
             })
             score = np.array(score)
             item_score = []
@@ -134,8 +134,8 @@ class Fism:
                 if len(rec_list) == 10:
                     break
             answer = self.helper.test_answer[i]
-            #print('answer is %s' % (answer))
-            #print(rec_list)
+            print('answer is %s' % (answer))
+            print(rec_list)
             if int(answer) in rec_list:
                 hit_num += 1
         return hit_num / self.user_num

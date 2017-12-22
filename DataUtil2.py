@@ -16,7 +16,7 @@ class DataUtil:
         self.test = {}
         self.test_answer = []
         self.read_test('ml_test')
-
+        self.num_negative = 4
     def calc_item_rated_by_user(self):
         for u, i in self.train_map:
             if u not in self.item_rated_by_user.keys():
@@ -67,8 +67,8 @@ class DataUtil:
         for line in open(self.dataset):
             userid, itemid = line.split('\t')
             triple.add((int(userid), int(itemid), 1))
-            # append one negative instance drawing from popular set
-            # for p_product in self.popular_product:
+            #   append one negative instance drawing from popular set
+            #   for p_product in self.popular_product:
             #     if (int(userid), int(p_product)) not in train and (int(userid), int(p_product), 1) not in result:
             #         result.add((int(userid), int(p_product), 0))
             #         break
