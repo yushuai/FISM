@@ -10,7 +10,7 @@ This data set is extracted from movielens-1m by Dr. Xiangnan He. The data set is
 
 # Evaluation
 I use the hit ratio(aka HR) metric to evalute the model performance. I tune the hyperparameter carefully for the best performance. Specifically,
-the best hit ratio of this code can achieve is 71.05%, after about 5 epoches.
+the best HR this code can achieve is 71.05%, after about 5 epoches training.
 
 # Last update date
 2017/12/22
