@@ -12,9 +12,9 @@ This data set is extracted from movielens-1m by Dr. Xiangnan He. The data set is
 I use the hit ratio(aka HR) metric to evalute the model performance. I tune the hyperparameter carefully for the best performance. Specifically,
 the best HR this code can achieve is 71.05%, after about 5 epoches training.
 
-# cite
-If you use the codes for your paper as baseline implementation, please cite: "https://github.com/yushuai/FISM"
+# Citation
+If you use the codes for your paper as baseline implementation, please cite the link: "https://github.com/yushuai/FISM"
 
 # Last update date
-2017/12/22
+2018/1/15
 
